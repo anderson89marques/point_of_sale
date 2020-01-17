@@ -1,0 +1,1 @@
+from point_of_sale.api.tests.test_order.test_api import BaseTest 

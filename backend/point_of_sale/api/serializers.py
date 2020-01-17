@@ -64,7 +64,6 @@ class OrderCreateSerializer(serializers.Serializer):
         order_itens = validated_data.pop('itens', [])
         order = self._create_order(validated_data)
         self._create_itens(order, order_itens)
-
         return order
 
     def _create_order(self, validated_data):
@@ -84,4 +83,5 @@ class OrderCreateSerializer(serializers.Serializer):
         for item in order_itens:
             pk = item.pop('id')
             product = Product.objects.get(pk=pk)
-            OrderItem.objects.create(order=order, product=product, **item)
+            order_item = OrderItem.objects.create(order=order, product=product, **item)
+            order_item.calculate_commission()

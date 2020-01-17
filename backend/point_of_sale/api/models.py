@@ -1,4 +1,6 @@
 import uuid
+import datetime
+from random import randint
 
 from django.db import models
 
@@ -74,6 +76,11 @@ class Order(CreatedUpdated):
         verbose_name = "Order"
         verbose_name_plural = 'Orders'
 
+    @property
+    def total_commission(self):
+        """Total commission for a Order"""
+        return sum(item.commission for item in self.itens.all())
+
     def __str__(self):
         return f"<Order {self.id}>"
 
@@ -85,10 +92,36 @@ class OrderItem(CreatedUpdated):
         Order, related_name='itens', on_delete=models.CASCADE)
     price = models.DecimalField(max_digits=6, decimal_places=2, default=0)
     quantity = models.PositiveSmallIntegerField(default=1)
+    commission = models.DecimalField(max_digits=6, decimal_places=2, default=0)
 
     class Meta:
         verbose_name = "OrderItem"
         verbose_name_plural = 'OrderItens'
+
+    def calculate_commission(self):
+        """Calculate commission for a OrderItem.
+        If Order is made between '00:00:01' and '12:00:00'
+        The commission will be 5% of the OrderItem price at most
+        otherwise the commission will be 4% of the OrderItem price at minimum  
+        """
+        now = datetime.datetime.today()
+        dates_range = [
+            self._get_datetime(datetime_info)
+            for datetime_info in ['00:00:01', '12:00:00', '23:59:59']
+        ]
+        if dates_range[0] <= now <= dates_range[0]:
+            self.commission = (self.price * randint(0, 5))/100
+        else:
+            self.commission = (self.price * randint(4, 10))/100
+        self.save()
+
+    def _get_datetime(self, datetime_info):
+        date_str = self._format_date(datetime_info)
+        return datetime.datetime.strptime(date_str, '%d/%m/%Y %H:%M:%S')
+
+    def _format_date(self, datetime_info):
+        today = datetime.date.today()
+        return f"{datetime.datetime.strftime(today, '%d/%m/%Y')} {datetime_info}"
 
     def __str__(self):
         return f"<OrderItem name: {self.product.name}, price: {self.price}, quantity: {self.quantity}>"

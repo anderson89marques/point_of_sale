@@ -36,6 +36,10 @@ class OrderCreateValidPostTest(BaseTest):
         """There must be one order"""
         self.assertEqual(Order.objects.count(), 1)
 
+    def test_order_total_commission(self):
+        order = Order.objects.first()
+        self.assertEqual(Order.objects.count(), 1)
+    
     def test_create_order_status_code_without_seller_id(self):
         data = self.data.copy()
         data['seller_id'] = None

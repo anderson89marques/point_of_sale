@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from point_of_sale.api.models import Customer, Seller
+from point_of_sale.api.models import Customer, Seller, Order
 from point_of_sale.api.serializers import (OrderCreateSerializer,
                                            OrderSerializer)
 from point_of_sale.api.tests import create_customer_data, create_seller_data
@@ -55,3 +55,4 @@ class OrderCreateSerializerTest(TestCase):
         serializer = OrderCreateSerializer(data=data)
         serializer.is_valid()
         self.assertFalse(serializer.errors)
+
