@@ -1,7 +1,7 @@
 import datetime
 
 from django.db.models import Sum, F
-from rest_framework import generics, viewsets
+from rest_framework import viewsets, filters
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
@@ -56,6 +56,8 @@ class SellerView(viewsets.ModelViewSet):
 
 
 class ProductView(viewsets.ModelViewSet):
+    search_fields = ['id', 'name', 'description']
+    filter_backends = (filters.SearchFilter,)
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
