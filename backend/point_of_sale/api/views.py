@@ -1,6 +1,6 @@
 import datetime
 
-from django.db.models import Sum
+from django.db.models import Sum, F
 from rest_framework import generics, viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -18,6 +18,20 @@ class CustomerView(viewsets.ModelViewSet):
     queryset = Customer.objects.all()
     serializer_class = CustomerSerializer
 
+    @action(detail=True)
+    def products(self, request, *args, **kwargs):
+        try:
+            customer = self.get_object()
+            start_date, end_date = period_dates(self.request.query_params)
+            results = Product.objects.filter(
+                orderitem__order__customer=customer, 
+                orderitem__created_at__range=[start_date, end_date]) \
+                .values('pk', 'name') \
+                .annotate(created_at=F('orderitem__created_at'))
+        except Exception as e:
+            return Response({'error': e.__str__()})
+
+        return Response(results)
 
 class SellerView(viewsets.ModelViewSet):
     queryset = Seller.objects.all()
