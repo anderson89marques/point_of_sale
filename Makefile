@@ -2,6 +2,7 @@ BACKEND_PATH = backend
 DJANGO_CMD = python $(BACKEND_PATH)/manage.py
 SETTINGS = point_of_sale.settings
 
+# BACKEND COMMANDS
 migrations:
 	$(DJANGO_CMD) makemigrations
 
@@ -19,3 +20,11 @@ runserver:
 
 test:
 	$(DJANGO_CMD) test $(BACKEND_PATH) --settings=$(SETTINGS)
+
+install_dev:
+	pip install -r $(BACKEND_PATH)/point_of_sale/requirements/dev_requirements.txt 
+
+install_prod:
+	pip install -r $(BACKEND_PATH)/point_of_sale/requirements/prod_requirements.txt
+
+local_start: install_dev migrations migrate
