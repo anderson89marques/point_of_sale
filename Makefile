@@ -33,3 +33,9 @@ install_prod:
 local_start: install_dev migrations migrate
 
 prod_start: install_prod migrations migrate collectstatic runserver
+
+load_fixture_docker:
+	docker-compose exec backend $(DJANGO_CMD) loaddata backend/point_of_sale/fixtures/db.json
+
+load_fixture:
+	$(DJANGO_CMD) loaddata backend/point_of_sale/fixtures/db.json
