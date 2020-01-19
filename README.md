@@ -28,6 +28,8 @@ cd point_of_sale
 docker-compose up --build
 ```
 
+Then you can use command ```make load_fixture_docker``` to create initial data.
+You can `postman` collections that are in `backend/postman` folder to access the API.
 
 ## How Test and Run the project backend locally (without docker)
 
