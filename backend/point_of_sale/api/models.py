@@ -50,11 +50,10 @@ class Seller(Person):
 
 class Product(CreatedUpdated):
     """Product Model"""
-    name = models.CharField(max_length=100, validators=[
-                            validate_product_name], null=False, blank=False)
+    name = models.CharField(max_length=150, null=False, blank=False)
     price = models.DecimalField(
         max_digits=6, decimal_places=2, null=False, blank=False)
-    description = models.TextField(max_length=200, null=False, blank=False)
+    description = models.TextField(max_length=400, null=False, blank=False)
     minimum_stock = models.PositiveIntegerField(default=0)
     stock = models.PositiveIntegerField(default=0)
 
