@@ -10,6 +10,25 @@ django-rest-framework, pylint, isort, autopep8, python-decouple
 postgres, reactjs
 ```
 
+## How Run the project using docker
+You need docker and docker-compose installed. (They need run without sudo)  
+
+- Clone repository
+```console
+git clone https://github.com/anderson89marques/point_of_sale
+```
+
+- Change directory into your newly created project.
+```console
+cd point_of_sale
+```
+
+- Run docker compose
+```console
+docker-compose up --build
+```
+
+
 ## How Test and Run the project backend locally (without docker)
 
  Clone repository

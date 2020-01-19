@@ -86,7 +86,7 @@ WSGI_APPLICATION = 'point_of_sale.wsgi.application'
 
 default_db_url = 'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')
 DATABASES = {
-    'default': config('DATABASE_URL', default=None, cast=dburl)
+    'default': config('DATABASE_URL', default=default_db_url, cast=dburl)
 }
 
 
