@@ -24,10 +24,6 @@ class ProductTestSerializer(TestCase):
         serializer = make_validated_serializer()
         self.assertFalse(serializer.errors)
 
-    def test_incorrect_name(self):
-        serializer = make_validated_serializer(name='@xpto')
-        self.assertIn('name', serializer.errors)
-
     def test_incorrect_price(self):
         serializer = make_validated_serializer(price='762,90')
         self.assertIn('price', serializer.errors)
