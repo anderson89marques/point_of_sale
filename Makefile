@@ -4,10 +4,10 @@ SETTINGS = point_of_sale.settings
 
 # BACKEND COMMANDS
 migrations:
-	$(DJANGO_CMD) makemigrations
+	$(DJANGO_CMD) makemigrations api
 
 migrate:
-	$(DJANGO_CMD) migrate
+	$(DJANGO_CMD) migrate api
 
 create-superuser:
 	$(DJANGO_CMD) createsuperuser
@@ -21,6 +21,9 @@ runserver:
 test:
 	$(DJANGO_CMD) test $(BACKEND_PATH) --settings=$(SETTINGS)
 
+collectstatic:
+	$(DJANGO_CMD) collectstatic --noinput
+
 install_dev:
 	pip install -r $(BACKEND_PATH)/point_of_sale/requirements/dev_requirements.txt 
 
@@ -28,3 +31,5 @@ install_prod:
 	pip install -r $(BACKEND_PATH)/point_of_sale/requirements/prod_requirements.txt
 
 local_start: install_dev migrations migrate
+
+prod_start: install_prod migrations migrate collectstatic runserver

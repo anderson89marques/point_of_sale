@@ -28,24 +28,10 @@ class ProductInvalidPostTest(APITestCase):
     def setUp(self):
         self.url = reverse('product-list')
 
-    def test_create_product_status_code_bad_request(self):
-        """Response must have status_code 400 BAD_REQUEST"""
-
-        data = create_product_data(name='Anderson Marques1')
-        self.response = self.client.post(self.url, data)
-        self.assertEqual(self.response.status_code,
-                         status.HTTP_400_BAD_REQUEST)
-
     def test_create_product(self):
         """There must be one product"""
 
         self.assertEqual(Product.objects.count(), 0)
-
-    def test_create_product_invalid_post_incorrect_name(self):
-        data = create_product_data(name='Anderson Marques1')
-        response = self.client.post(self.url, data)
-        self.assertEqual(json.loads(response.content), {
-                         'name': ['Name should not contains digit.']})
     
     def test_create_product_invalid_post_incorrect_price(self):
         data = create_product_data(price='762,90')

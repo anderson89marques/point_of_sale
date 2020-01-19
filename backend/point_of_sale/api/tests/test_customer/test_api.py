@@ -77,14 +77,15 @@ class CustomerListTest(APITestCase):
 
     def test_get_customer_with_empty_data(self):
         response = self.client.get(self.url)
-        self.assertEqual(response.data, [])
+        self.assertEqual(response.data['results'], [])
 
     def test_get_customer(self):
         data = create_customer_data()
         customer = Customer.objects.create(**data)
         response = self.client.get(self.url)
+
         self.assertDictContainsSubset(
-            data, json.loads(response.content)[0])
+            data, json.loads(response.content)['results'][0])
 
 
 class CustomerDeleteTest(APITestCase):

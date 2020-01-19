@@ -41,3 +41,8 @@ make local_start
 ```console
 make test
 ```
+
+- Run project backend
+```console
+make runserver
+```
