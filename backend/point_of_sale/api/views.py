@@ -1,10 +1,7 @@
+"""Rest API for the project"""
 import datetime
 
-from django.db.models import Sum, F
-from rest_framework import viewsets, filters
-from rest_framework.decorators import action
-from rest_framework.response import Response
-
+from django.db.models import F, Sum
 from point_of_sale.api.models import (Customer, Order, OrderItem, Product,
                                       Seller)
 from point_of_sale.api.serializers import (CustomerSerializer,
@@ -12,6 +9,9 @@ from point_of_sale.api.serializers import (CustomerSerializer,
                                            OrderSerializer, ProductSerializer,
                                            SellerSerializer)
 from point_of_sale.api.utils import period_dates
+from rest_framework import filters, viewsets
+from rest_framework.decorators import action
+from rest_framework.response import Response
 
 
 class CustomerView(viewsets.ModelViewSet):
@@ -24,7 +24,7 @@ class CustomerView(viewsets.ModelViewSet):
             customer = self.get_object()
             start_date, end_date = period_dates(self.request.query_params)
             results = Product.objects.filter(
-                orderitem__order__customer=customer, 
+                orderitem__order__customer=customer,
                 orderitem__created_at__range=[start_date, end_date]) \
                 .values('pk', 'name') \
                 .annotate(created_at=F('orderitem__created_at'))
@@ -32,6 +32,7 @@ class CustomerView(viewsets.ModelViewSet):
             return Response({'error': e.__str__()})
 
         return Response(results)
+
 
 class SellerView(viewsets.ModelViewSet):
     queryset = Seller.objects.all()

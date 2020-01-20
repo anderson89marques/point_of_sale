@@ -1,3 +1,5 @@
+"""Test suit for model seller"""
+
 from datetime import datetime
 
 from django.core.exceptions import ValidationError

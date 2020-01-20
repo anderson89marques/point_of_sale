@@ -1,3 +1,5 @@
+"""Test suit for order serializers"""
+
 from django.test import TestCase
 
 from point_of_sale.api.models import Customer, Seller, Order

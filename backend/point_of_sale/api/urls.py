@@ -1,7 +1,6 @@
 from django.urls import include, path
-from rest_framework import routers
-
 from point_of_sale.api import views
+from rest_framework import routers
 
 router = routers.DefaultRouter()
 router.register('orders', views.OrderView, basename='order')

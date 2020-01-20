@@ -1,3 +1,4 @@
+"""Models Fields Validations"""
 import re
 
 from django.core.exceptions import ValidationError
@@ -18,6 +19,7 @@ def validate_product_name(prodname):
         raise ValidationError("Please only use letters, "
                               "numbers and underscores or spaces. "
                               "The name cannot start with a space.")
+
 
 def validate_name(value):
     if bool(re.search(r'\d', value)):

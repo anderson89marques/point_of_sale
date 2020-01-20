@@ -1,3 +1,5 @@
+"""Test suit for seller serializers"""
+
 from django.test import TestCase
 
 from point_of_sale.api.tests import create_seller_data

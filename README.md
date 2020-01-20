@@ -7,11 +7,12 @@ The project is point of Sale system.
 ```
 Linux, Notebook Dell i5, VSCode(IDE), python 3.8.0, django, 
 django-rest-framework, pylint, isort, autopep8, python-decouple
-postgres, reactjs
+postgres, reactjs, docker, docker-compose
 ```
 
 ## How Run the project using docker
-You need docker and docker-compose installed. (They need run without sudo)  
+You need docker and docker-compose installed. (They need run without sudo)
+I use the latests versions of them.  
 
 - Clone repository
 ```console
@@ -28,8 +29,8 @@ cd point_of_sale
 docker-compose up --build
 ```
 
-Then you can use command ```make load_fixture_docker``` to create initial data.
-You can `postman` collections that are in `backend/postman` folder to access the API.
+A initial data was created.
+You can use `postman` collections that are in `backend/postman` folder to access the backend API.
 
 ## How Test and Run the project backend locally (without docker)
 
