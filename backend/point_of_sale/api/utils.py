@@ -7,7 +7,7 @@ def period_dates(query_params):
     end_date_str = query_params.get('end_date', None)
     if not start_date_str or not end_date_str:
         raise Exception(
-            "start_date and end_date must be used as query params in this format(yyyy-mm--dd).")
+            "start_date and end_date must be used as query params in this format(yyyy-mm-dd).")
     start_date = datetime.datetime.strptime(start_date_str, "%Y-%M-%d")
     end_date = datetime.datetime.strptime(
         end_date_str, "%Y-%M-%d") + datetime.timedelta(days=1)
