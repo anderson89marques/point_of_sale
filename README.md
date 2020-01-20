@@ -3,6 +3,7 @@ Challenge for hiring at Luizalabs company.
 The project is point of Sale system.
 
 [![Build Status](https://travis-ci.org/anderson89marques/wttdv3.svg?branch=master)](https://travis-ci.org/anderson89marques/point_of_sale)
+[![codecov](https://codecov.io/gh/anderson89marques/point_of_sale/branch/master/graph/badge.svg)](https://codecov.io/gh/anderson89marques/point_of_sale)
 
 # Tools and main libraries used for this challenge
 
