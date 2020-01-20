@@ -19,7 +19,7 @@ runserver:
 	$(DJANGO_CMD) runserver 0.0.0.0:8000 --settings=$(SETTINGS)
 
 test:
-	$(DJANGO_CMD) test $(BACKEND_PATH) --settings=$(SETTINGS)
+	pytest -vv --cov=./
 
 collectstatic:
 	$(DJANGO_CMD) collectstatic --noinput

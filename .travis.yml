@@ -5,3 +5,7 @@ install:
   - make install_dev
 script:
   - make test
+  
+# Push the results back to codecov
+after_success:
+  - codecov
