@@ -1,12 +1,15 @@
-import uuid
+"""Models of Point of Sale
+Author: Anderson Marques Morais
+"""
+
 import datetime
+import uuid
 from random import randint
 
 from django.db import models
-
 from point_of_sale.api.validators import (validate_name, validate_phone_number,
                                           validate_product_name)
-
+from point_of_sale.api import utils
 
 class CreatedUpdated(models.Model):
     """Base model with create and update date information"""
@@ -19,8 +22,8 @@ class CreatedUpdated(models.Model):
 
 class Person(CreatedUpdated):
     """Base model for person's base information"""
-    name = models.CharField(max_length=100, validators=[
-                            validate_product_name, validate_name])
+    name = models.CharField(
+        max_length=100, validators=[validate_product_name, validate_name])
     age = models.PositiveSmallIntegerField()
     phone = models.CharField(max_length=20, validators=[validate_phone_number])
     email = models.EmailField()
@@ -49,7 +52,8 @@ class Seller(Person):
 
 
 class Product(CreatedUpdated):
-    """Product Model"""
+    """Product Model
+    Represents Product and Service data"""
     name = models.CharField(max_length=150, null=False, blank=False)
     price = models.DecimalField(
         max_digits=6, decimal_places=2, null=False, blank=False)
@@ -101,11 +105,11 @@ class OrderItem(CreatedUpdated):
         """Calculate commission for a OrderItem.
         If Order is made between '00:00:01' and '12:00:00'
         The commission will be 5% of the OrderItem price at most
-        otherwise the commission will be 4% of the OrderItem price at minimum  
+        otherwise the commission will be 4% of the OrderItem price at minimum
         """
         now = datetime.datetime.today()
         dates_range = [
-            self._get_datetime(datetime_info)
+            utils.get_datetime(datetime_info)
             for datetime_info in ['00:00:01', '12:00:00', '23:59:59']
         ]
         if dates_range[0] <= now <= dates_range[0]:
@@ -114,13 +118,5 @@ class OrderItem(CreatedUpdated):
             self.commission = (self.price * randint(4, 10))/100
         self.save()
 
-    def _get_datetime(self, datetime_info):
-        date_str = self._format_date(datetime_info)
-        return datetime.datetime.strptime(date_str, '%d/%m/%Y %H:%M:%S')
-
-    def _format_date(self, datetime_info):
-        today = datetime.date.today()
-        return f"{datetime.datetime.strftime(today, '%d/%m/%Y')} {datetime_info}"
-
     def __str__(self):
-        return f"<OrderItem name: {self.product.name}, price: {self.price}, quantity: {self.quantity}>"
+        return f"<name: {self.product.name}, price: {self.price}, quantity: {self.quantity}>"

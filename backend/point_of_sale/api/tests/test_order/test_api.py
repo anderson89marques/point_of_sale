@@ -1,3 +1,4 @@
+"""Test suit for order API"""
 import json
 
 from django.urls import reverse

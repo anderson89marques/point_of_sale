@@ -19,7 +19,7 @@ runserver:
 	$(DJANGO_CMD) runserver 0.0.0.0:8000 --settings=$(SETTINGS)
 
 test:
-	$(DJANGO_CMD) test $(BACKEND_PATH) --settings=$(SETTINGS)
+	pytest -vv --cov=./
 
 collectstatic:
 	$(DJANGO_CMD) collectstatic --noinput
@@ -30,12 +30,14 @@ install_dev:
 install_prod:
 	pip install -r $(BACKEND_PATH)/point_of_sale/requirements/prod_requirements.txt
 
-local_start: install_dev migrations migrate
-
-prod_start: install_prod migrations migrate collectstatic runserver
+load_fixture:
+	$(DJANGO_CMD) loaddata backend/point_of_sale/fixtures/db.json
 
 load_fixture_docker:
 	docker-compose exec backend $(DJANGO_CMD) loaddata backend/point_of_sale/fixtures/db.json
 
-load_fixture:
-	$(DJANGO_CMD) loaddata backend/point_of_sale/fixtures/db.json
+local_start: install_dev migrations migrate
+
+prod_start: install_prod migrations migrate load_fixture collectstatic runserver
+
+

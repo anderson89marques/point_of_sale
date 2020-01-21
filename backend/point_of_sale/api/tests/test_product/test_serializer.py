@@ -1,3 +1,5 @@
+"""Test suit for product serializers"""
+
 from django.test import TestCase
 
 from point_of_sale.api.tests import create_product_data

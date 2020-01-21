@@ -1,3 +1,5 @@
+"""Rest API Serialization Classes for point_of_sale project"""
+
 from rest_framework import serializers
 
 from point_of_sale.api.models import (Customer, Order, OrderItem, Product,
@@ -5,54 +7,62 @@ from point_of_sale.api.models import (Customer, Order, OrderItem, Product,
 
 
 class CustomerSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
+    """Handle Customer data"""
+    class Meta: # pylint: disable=C0115
         model = Customer
         fields = ['id', 'name', 'age', 'email', 'phone']
 
 
 class SellerSerializer(serializers.HyperlinkedModelSerializer):
+    """Handle Seller data"""
     identify = serializers.UUIDField(read_only=True)
 
-    class Meta:
+    class Meta: # pylint: disable=C0115
         model = Seller
         fields = ['id', 'name', 'age', 'email', 'phone', 'identify']
 
 
 class ProductSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
+    """Handle Seller data"""
+    class Meta: # pylint: disable=C0115
         model = Product
         fields = ['id', 'name', 'description', 'price', 'minimum_stock', 'stock']
 
 
 class OrderItemCreateSerializer(serializers.Serializer):
+    """Handle OrderItem creational data"""
     id = serializers.IntegerField()
     quantity = serializers.IntegerField()
     price = serializers.DecimalField(max_digits=6, decimal_places=2)
 
 
 class CustomerCreateSerializer(serializers.ModelSerializer):
-    class Meta:
+    """Handle Customer creational data"""
+    class Meta: # pylint: disable=C0115
         model = Customer
         fields = ['id', 'name']
 
 
 class SellerCreateSerializer(serializers.ModelSerializer):
-    class Meta:
+    """Handle Seller creational data"""
+    class Meta: # pylint: disable=C0115
         model = Seller
         fields = ['id', 'name', 'identify']
 
 
 class OrderSerializer(serializers.HyperlinkedModelSerializer):
+    """Handle Order data"""
     itens = OrderItemCreateSerializer(many=True, read_only=True)
     customer = CustomerSerializer(read_only=True)
     seller = SellerSerializer(read_only=True)
 
-    class Meta:
+    class Meta: # pylint: disable=C0115
         model = Order
         fields = ['id', 'total_price', 'itens', 'customer', 'seller']
 
 
 class OrderCreateSerializer(serializers.Serializer):
+    """Handle Order creational data"""
     customer_id = serializers.IntegerField(write_only=True)
     customer = CustomerCreateSerializer(read_only=True)
     seller_id = serializers.IntegerField(allow_null=True, required=False)
