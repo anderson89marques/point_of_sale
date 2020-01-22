@@ -1,5 +1,5 @@
-# AMcom Challenge 
-Challenge for hiring at Luizalabs company.
+# Amcom Challenge 
+Challenge for hiring at Amcom company.
 The project is point of Sale system.
 
 [![Build Status](https://travis-ci.org/anderson89marques/wttdv3.svg?branch=master)](https://travis-ci.org/anderson89marques/point_of_sale)
@@ -34,6 +34,10 @@ docker-compose up --build
 
 A initial data was created.
 You can use `postman` collections that are in `backend/postman` folder to access the backend API.
+
+## Model Diagram
+
+![Alt text](doc_images/diagrama.png?raw=true "Home")
 
 ## How Test and Run the project backend locally (without docker)
 
@@ -70,4 +74,29 @@ make test
 - Run project backend
 ```console
 make runserver
+```
+
+## How Test and Run the project frontend locally (without docker)
+
+You need node instaled and npm or yarn. (Below steps use yarn).
+You need run backend again or frontend don't work in right way.
+
+Clone repository
+```console
+git clone https://github.com/anderson89marques/point_of_sale
+```
+
+- Change directory into your newly created project.
+```console
+cd point_of_sale/frontend
+```
+
+- Install dependencies using yarn. 
+```console
+yarn 
+```
+
+- Run frontend project at dev environment.
+```console
+yarn start
 ```

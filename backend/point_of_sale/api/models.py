@@ -7,9 +7,11 @@ import uuid
 from random import randint
 
 from django.db import models
+
+from point_of_sale.api import utils
 from point_of_sale.api.validators import (validate_name, validate_phone_number,
                                           validate_product_name)
-from point_of_sale.api import utils
+
 
 class CreatedUpdated(models.Model):
     """Base model with create and update date information"""
