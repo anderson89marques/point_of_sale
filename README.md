@@ -34,6 +34,8 @@ docker-compose up --build
 
 A initial data was created.
 You can use `postman` collections that are in `backend/postman` folder to access the backend API.
+You can see the api doc acessing `/swagger` path 
+
 
 ## Model Diagram
 
@@ -99,4 +101,9 @@ yarn
 - Run frontend project at dev environment.
 ```console
 yarn start
+```
+
+- Run Tests
+```console
+yarn test
 ```
