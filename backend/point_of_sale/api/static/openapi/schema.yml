@@ -1,0 +1,798 @@
+swagger: '2.0'
+info:
+  title: Snippets API
+  description: Test description
+  termsOfService: https://www.google.com/policies/terms/
+  contact:
+    email: contact@snippets.local
+  license:
+    name: BSD License
+  version: v1
+host: localhost:8000
+schemes:
+  - http
+basePath: /api
+consumes:
+  - application/json
+produces:
+  - application/json
+securityDefinitions:
+  Basic:
+    type: basic
+security:
+  - Basic: []
+paths:
+  /customers/:
+    get:
+      operationId: customers_list
+      description: ''
+      parameters:
+        - name: limit
+          in: query
+          description: Number of results to return per page.
+          required: false
+          type: integer
+        - name: offset
+          in: query
+          description: The initial index from which to return the results.
+          required: false
+          type: integer
+      responses:
+        '200':
+          description: ''
+          schema:
+            required:
+              - count
+              - results
+            type: object
+            properties:
+              count:
+                type: integer
+              next:
+                type: string
+                format: uri
+                x-nullable: true
+              previous:
+                type: string
+                format: uri
+                x-nullable: true
+              results:
+                type: array
+                items:
+                  $ref: '#/definitions/Customer'
+      tags:
+        - customers
+    post:
+      operationId: customers_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Customer'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/Customer'
+      tags:
+        - customers
+    parameters: []
+  /customers/{id}/:
+    get:
+      operationId: customers_read
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Customer'
+      tags:
+        - customers
+    put:
+      operationId: customers_update
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Customer'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Customer'
+      tags:
+        - customers
+    patch:
+      operationId: customers_partial_update
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Customer'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Customer'
+      tags:
+        - customers
+    delete:
+      operationId: customers_delete
+      description: ''
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      tags:
+        - customers
+    parameters:
+      - name: id
+        in: path
+        description: A unique integer value identifying this Customer.
+        required: true
+        type: integer
+  /customers/{id}/products/:
+    get:
+      operationId: customers_products
+      description: ''
+      parameters: 
+        - name: start_date
+          in: query
+          type: string
+          description: Data inicial (format yyyy-mm-dd) 
+        - name: end_date
+          in: query
+          type: string
+          description: Final inicial (format yyyy-mm-dd)
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Customer'
+      tags:
+        - customers
+    parameters:
+      - name: id
+        in: path
+        description: A unique integer value identifying this Customer.
+        required: true
+        type: integer
+  /orders/:
+    get:
+      operationId: orders_list
+      description: ''
+      parameters:
+        - name: limit
+          in: query
+          description: Number of results to return per page.
+          required: false
+          type: integer
+        - name: offset
+          in: query
+          description: The initial index from which to return the results.
+          required: false
+          type: integer
+      responses:
+        '200':
+          description: ''
+          schema:
+            required:
+              - count
+              - results
+            type: object
+            properties:
+              count:
+                type: integer
+              next:
+                type: string
+                format: uri
+                x-nullable: true
+              previous:
+                type: string
+                format: uri
+                x-nullable: true
+              results:
+                type: array
+                items:
+                  $ref: '#/definitions/Order'
+      tags:
+        - orders
+    post:
+      operationId: orders_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/OrderCreate'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/OrderCreate'
+      tags:
+        - orders
+    parameters: []
+  /orders/{id}/:
+    get:
+      operationId: orders_read
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Order'
+      tags:
+        - orders
+    put:
+      operationId: orders_update
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/OrderCreate'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/OrderCreate'
+      tags:
+        - orders
+    patch:
+      operationId: orders_partial_update
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Order'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Order'
+      tags:
+        - orders
+    delete:
+      operationId: orders_delete
+      description: ''
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      tags:
+        - orders
+    parameters:
+      - name: id
+        in: path
+        description: A unique integer value identifying this Order.
+        required: true
+        type: integer
+  /products/:
+    get:
+      operationId: products_list
+      description: ''
+      parameters:
+        - name: search
+          in: query
+          description: A search term.
+          required: false
+          type: string
+        - name: limit
+          in: query
+          description: Number of results to return per page.
+          required: false
+          type: integer
+        - name: offset
+          in: query
+          description: The initial index from which to return the results.
+          required: false
+          type: integer
+      responses:
+        '200':
+          description: ''
+          schema:
+            required:
+              - count
+              - results
+            type: object
+            properties:
+              count:
+                type: integer
+              next:
+                type: string
+                format: uri
+                x-nullable: true
+              previous:
+                type: string
+                format: uri
+                x-nullable: true
+              results:
+                type: array
+                items:
+                  $ref: '#/definitions/Product'
+      tags:
+        - products
+    post:
+      operationId: products_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Product'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/Product'
+      tags:
+        - products
+    parameters: []
+  /products/best_sellers/:
+    get:
+      operationId: products_best_sellers
+      description: Best Sellers products by date range
+      parameters:
+        - name: search
+          in: query
+          description: A search term.
+          required: false
+          type: string
+        - name: start_date
+          in: query
+          type: string
+          description: Data inicial (format yyyy-mm-dd) 
+        - name: end_date
+          in: query
+          type: string
+          description: Final inicial (format yyyy-mm-dd)
+        - name: limit
+          in: query
+          description: Number of results to return per page.
+          required: false
+          type: integer
+        - name: offset
+          in: query
+          description: The initial index from which to return the results.
+          required: false
+          type: integer
+      responses:
+        '200':
+          description: ''
+          schema:
+            required:
+              - count
+              - results
+            type: object
+            properties:
+              count:
+                type: integer
+              next:
+                type: string
+                format: uri
+                x-nullable: true
+              previous:
+                type: string
+                format: uri
+                x-nullable: true
+              results:
+                type: array
+                items:
+                  $ref: '#/definitions/Product'
+      tags:
+        - products
+    parameters: []
+  /products/{id}/:
+    get:
+      operationId: products_read
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Product'
+      tags:
+        - products
+    put:
+      operationId: products_update
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Product'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Product'
+      tags:
+        - products
+    patch:
+      operationId: products_partial_update
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Product'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Product'
+      tags:
+        - products
+    delete:
+      operationId: products_delete
+      description: ''
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      tags:
+        - products
+    parameters:
+      - name: id
+        in: path
+        description: A unique integer value identifying this Product.
+        required: true
+        type: integer
+  /sellers/:
+    get:
+      operationId: sellers_list
+      description: ''
+      parameters:
+        - name: limit
+          in: query
+          description: Number of results to return per page.
+          required: false
+          type: integer
+        - name: offset
+          in: query
+          description: The initial index from which to return the results.
+          required: false
+          type: integer
+      responses:
+        '200':
+          description: ''
+          schema:
+            required:
+              - count
+              - results
+            type: object
+            properties:
+              count:
+                type: integer
+              next:
+                type: string
+                format: uri
+                x-nullable: true
+              previous:
+                type: string
+                format: uri
+                x-nullable: true
+              results:
+                type: array
+                items:
+                  $ref: '#/definitions/Seller'
+      tags:
+        - sellers
+    post:
+      operationId: sellers_create
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Seller'
+      responses:
+        '201':
+          description: ''
+          schema:
+            $ref: '#/definitions/Seller'
+      tags:
+        - sellers
+    parameters: []
+  /sellers/{id}/:
+    get:
+      operationId: sellers_read
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Seller'
+      tags:
+        - sellers
+    put:
+      operationId: sellers_update
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Seller'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Seller'
+      tags:
+        - sellers
+    patch:
+      operationId: sellers_partial_update
+      description: ''
+      parameters:
+        - name: data
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Seller'
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Seller'
+      tags:
+        - sellers
+    delete:
+      operationId: sellers_delete
+      description: ''
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      tags:
+        - sellers
+    parameters:
+      - name: id
+        in: path
+        description: A unique integer value identifying this Seller.
+        required: true
+        type: integer
+  /sellers/{id}/commission/:
+    get:
+      operationId: sellers_commission
+      description: Total commission's seller by date range
+      parameters:
+        - name: start_date
+          in: query
+          type: string
+          description: Data inicial (format yyyy-mm-dd) 
+        - name: end_date
+          in: query
+          type: string
+          description: Final inicial (format yyyy-mm-dd)
+      responses:
+        '200':
+          description: ''
+          schema:
+            $ref: '#/definitions/Seller'
+      tags:
+        - sellers
+    parameters:
+      - name: id
+        in: path
+        description: A unique integer value identifying this Seller.
+        required: true
+        type: integer
+definitions:
+  Customer:
+    required:
+      - name
+      - age
+      - email
+      - phone
+    type: object
+    properties:
+      id:
+        title: ID
+        type: integer
+        readOnly: true
+      name:
+        title: Name
+        type: string
+        maxLength: 100
+        minLength: 1
+      age:
+        title: Age
+        type: integer
+      email:
+        title: Email
+        type: string
+        format: email
+        maxLength: 254
+        minLength: 1
+      phone:
+        title: Phone
+        type: string
+        maxLength: 20
+        minLength: 1
+  OrderItemCreate:
+    required:
+      - id
+      - quantity
+      - price
+    type: object
+    properties:
+      id:
+        title: Id
+        type: integer
+      quantity:
+        title: Quantity
+        type: integer
+      price:
+        title: Price
+        type: string
+        format: decimal
+  Seller:
+    title: Seller
+    required:
+      - name
+      - age
+      - email
+      - phone
+    type: object
+    properties:
+      id:
+        title: ID
+        type: integer
+        readOnly: true
+      name:
+        title: Name
+        type: string
+        maxLength: 100
+        minLength: 1
+      age:
+        title: Age
+        type: integer
+      email:
+        title: Email
+        type: string
+        format: email
+        maxLength: 254
+        minLength: 1
+      phone:
+        title: Phone
+        type: string
+        maxLength: 20
+        minLength: 1
+      identify:
+        title: Identify
+        type: string
+        format: uuid
+        readOnly: true
+  Order:
+    required:
+      - total_price
+    type: object
+    properties:
+      id:
+        title: ID
+        type: integer
+        readOnly: true
+      total_price:
+        title: Total price
+        type: string
+        format: decimal
+      itens:
+        type: array
+        items:
+          $ref: '#/definitions/OrderItemCreate'
+        readOnly: true
+      customer:
+        $ref: '#/definitions/Customer'
+      seller:
+        $ref: '#/definitions/Seller'
+  CustomerCreate:
+    title: Customer
+    required:
+      - name
+    type: object
+    properties:
+      id:
+        title: ID
+        type: integer
+        readOnly: true
+      name:
+        title: Name
+        type: string
+        maxLength: 100
+        minLength: 1
+  SellerCreate:
+    title: Seller
+    required:
+      - name
+    type: object
+    properties:
+      id:
+        title: ID
+        type: integer
+        readOnly: true
+      name:
+        title: Name
+        type: string
+        maxLength: 100
+        minLength: 1
+      identify:
+        title: Identify
+        type: string
+        format: uuid
+  OrderCreate:
+    required:
+      - customer_id
+      - total_price
+      - itens
+    type: object
+    properties:
+      customer_id:
+        title: Customer id
+        type: integer
+      customer:
+        $ref: '#/definitions/CustomerCreate'
+      seller_id:
+        title: Seller id
+        type: integer
+        x-nullable: true
+      seller:
+        $ref: '#/definitions/SellerCreate'
+      total_price:
+        title: Total price
+        type: string
+        format: decimal
+      itens:
+        type: array
+        items:
+          $ref: '#/definitions/OrderItemCreate'
+  Product:
+    required:
+      - name
+      - description
+      - price
+    type: object
+    properties:
+      id:
+        title: ID
+        type: integer
+        readOnly: true
+      name:
+        title: Name
+        type: string
+        maxLength: 150
+        minLength: 1
+      description:
+        title: Description
+        type: string
+        maxLength: 400
+        minLength: 1
+      price:
+        title: Price
+        type: string
+        format: decimal
+      minimum_stock:
+        title: Minimum stock
+        type: integer
+      stock:
+        title: Stock
+        type: integer
